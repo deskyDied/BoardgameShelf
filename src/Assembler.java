@@ -1,34 +1,26 @@
 import java.util.ArrayList;
-import java.util.Random;
+
+//NOTE: My resolution rounds down. 1.67 @ .25 = 1.5
 
 public class Assembler {
 
 	public static void main(String[] args) {
-		Shelf MS = new Shelf(10,10,.5,.05);
-		MS.printShelf();
-		printBoxes(getRandomBoxes(10,10,5));
+		double res = .25;
+		Shelf shelf = new Shelf(24, 36, .5, res);
+		//shelf.printShelf();
 		
-
-	}
-
-	
-	
-	//TODO: Should have a class for these
-	
-	public static ArrayList<Box> getRandomBoxes(int maxHeight, int maxWidth, int length){
-		ArrayList<Box> ar = new ArrayList<Box>();
-		Random rand = new Random();
-		for(int i = 0; i<length; i++) {
-			ar.add(new Box(rand.nextInt(maxHeight+1),rand.nextInt(maxWidth+1)));
-		}
+		Boxes boxes = new Boxes(4, 12, true, 40, res);
+		//boxes.printBoxesDimensions();
 		
-		return ar;
-	}
-	
-	public static void printBoxes(ArrayList<Box> boxes) { /* TODO: should be a resolution to print*/
-		for(int i = 0; i<boxes.size(); i++) {
-			boxes.get(i).printBox();
-			System.out.printf("\n");
-		}
+		ShelfFiller shelfFiller = new ShelfFiller(0);
+		shelfFiller.fillShelfStandard(shelf, boxes, 1);
+		//shelf.print();
+		shelf.clear();
+		System.out.println();
+		shelfFiller.fillShelfOptimizeRandom(shelf,  boxes,  1, 100);
+		shelf.print();
+
 	}
 }
+	
+
